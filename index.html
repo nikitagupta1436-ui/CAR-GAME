@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#07131d" />
+    <meta name="description" content="Race the highway and solve data-structure challenges in DSA Racer." />
+    <title>DSA Racer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <main id="game">
+      <canvas id="game-canvas" aria-label="DSA Racer 3D highway"></canvas>
+      <div id="hud" class="hidden">
+        <header class="hud-top">
+          <div class="brand"><span class="brand-mark">D</span><span>DSA <b>RACER</b></span></div>
+          <div class="level-chip">LEVEL <strong id="level-value">1</strong></div>
+          <div class="score-chip">SCORE <strong id="score-value">0</strong></div>
+          <button id="pause-button" class="icon-button" aria-label="Pause game">Ⅱ</button>
+        </header>
+        <section class="hud-bottom" aria-label="Race telemetry">
+          <div class="gauge speed-gauge"><div class="gauge-label">SPEED</div><div><strong id="speed-value">0</strong><span> km/h</span></div></div>
+          <div class="status-bars">
+            <div class="bar-row"><span>FUEL</span><div class="bar-track"><div id="fuel-bar" class="bar-fill fuel-fill"></div></div><strong id="fuel-value">100%</strong></div>
+            <div class="bar-row"><span>HEALTH</span><div class="bar-track"><div id="health-bar" class="bar-fill health-fill"></div></div><strong id="health-value">100%</strong></div>
+            <div class="progress-wrap"><div class="progress-track"><div id="progress-bar" class="progress-fill"></div><i class="station-marker" title="Fuel station"></i></div><div class="progress-labels"><span>START</span><span id="distance-value">0 / 2000 m</span><span>FINISH</span></div></div>
+          </div>
+          <div class="gear-gauge"><span>GEAR</span><strong id="gear-value">N</strong></div>
+        </section>
+        <div id="toast" class="toast"></div>
+      </div>
+      <div id="screen-layer" class="screen-layer">
+        <section id="menu-screen" class="screen-card menu-card">
+          <div class="eyebrow">THE HIGHWAY TO BIG-O</div>
+          <h1>DSA<br /><span>RACER</span></h1>
+          <p>Drive fast. Think faster. Prove your algorithmic instincts on the open road.</p>
+          <button id="play-button" class="primary-button">START YOUR ENGINE <span>→</span></button>
+          <button id="how-button" class="text-button">HOW TO PLAY</button>
+          <div class="best-score">PERSONAL BEST <strong id="menu-high-score">0</strong></div>
+        </section>
+        <section id="how-screen" class="screen-card hidden">
+          <div class="eyebrow">QUICK BRIEFING</div><h2>HOW TO PLAY</h2>
+          <p>Use <b>W / ↑</b> to accelerate, <b>S / ↓</b> to brake and <b>A / D</b> or arrow keys to steer. Space is your handbrake; <b>P</b> pauses the race.</p>
+          <p>Reach the fuel station halfway through each highway and answer a DSA question. Correct answers restore all fuel; a wrong answer still gets you 30%.</p>
+          <p>Avoid traffic, protect your health, and reach the finish. Questions get harder as you progress.</p>
+          <button id="back-menu-button" class="primary-button">GOT IT</button>
+        </section>
+        <section id="pause-screen" class="screen-card hidden"><div class="eyebrow">PIT STOP</div><h2>RACE PAUSED</h2><p>Catch your breath. The road will wait.</p><button id="resume-button" class="primary-button">RESUME RACE</button><button id="quit-button" class="text-button">BACK TO MENU</button></section>
+        <section id="result-screen" class="screen-card hidden">
+          <div id="result-eyebrow" class="eyebrow">RACE REPORT</div><h2 id="result-title">LEVEL COMPLETE</h2><p id="result-message">Great driving.</p>
+          <div class="result-stats"><div><span>SCORE</span><strong id="result-score">0</strong></div><div><span>TIME</span><strong id="result-time">0:00</strong></div><div><span>ACCURACY</span><strong id="result-accuracy">0%</strong></div></div>
+          <button id="result-button" class="primary-button">NEXT LEVEL <span>→</span></button>
+        </section>
+      </div>
+      <section id="quiz-modal" class="quiz-modal hidden" role="dialog" aria-modal="true" aria-labelledby="quiz-question">
+        <div class="quiz-panel">
+          <div class="quiz-top"><div><div class="eyebrow">FUEL STOP · <span id="quiz-topic">ARRAYS</span></div><span id="quiz-difficulty" class="difficulty-tag">EASY</span></div><div class="timer-ring" id="quiz-timer"><strong id="timer-value">30</strong><span>SEC</span></div></div>
+          <h2 id="quiz-question"></h2><pre id="quiz-code" class="hidden"></pre>
+          <div id="quiz-options" class="quiz-options"></div>
+          <div class="quiz-footer"><button id="hint-button" class="hint-button">💡 HINT <span>(−10 PTS)</span></button><span id="quiz-feedback" aria-live="polite"></span></div>
+          <p id="quiz-explanation" class="quiz-explanation hidden"></p>
+        </div>
+      </section>
+      <div id="touch-controls" class="touch-controls hidden" aria-label="Touch driving controls">
+        <div class="touch-steer"><button data-control="left" aria-label="Steer left">◀</button><button data-control="right" aria-label="Steer right">▶</button></div>
+        <div class="touch-pedals"><button data-control="brake" aria-label="Brake">BRAKE</button><button data-control="accelerate" aria-label="Accelerate">GAS</button></div>
+      </div>
+      <button id="mute-button" class="mute-button" aria-label="Mute audio">♪</button>
+      <div id="loading-screen" class="loading-screen"><span class="loading-mark">D</span><span>PREPARING THE GRID</span></div>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
