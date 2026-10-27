@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#07131d" />
-    <meta name="description" content="Race the highway and solve data-structure challenges in DSA Racer." />
+    <meta name="description" content="Race the highway, collect coins, and solve DSA challenges in DSA Racer." />
     <title>DSA Racer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -19,55 +19,79 @@
           <div class="brand"><span class="brand-mark">D</span><span>DSA <b>RACER</b></span></div>
           <div class="level-chip">LEVEL <strong id="level-value">1</strong></div>
           <div class="score-chip">SCORE <strong id="score-value">0</strong></div>
+          <div class="wallet"><span>🪙 <b id="coins-value">0</b></span><span>$<b id="dollars-value">0</b></span></div>
           <button id="pause-button" class="icon-button" aria-label="Pause game">Ⅱ</button>
         </header>
         <section class="hud-bottom" aria-label="Race telemetry">
           <div class="gauge speed-gauge"><div class="gauge-label">SPEED</div><div><strong id="speed-value">0</strong><span> km/h</span></div></div>
           <div class="status-bars">
             <div class="bar-row"><span>FUEL</span><div class="bar-track"><div id="fuel-bar" class="bar-fill fuel-fill"></div></div><strong id="fuel-value">100%</strong></div>
-            <div class="bar-row"><span>HEALTH</span><div class="bar-track"><div id="health-bar" class="bar-fill health-fill"></div></div><strong id="health-value">100%</strong></div>
+            <div class="bar-row"><span>LIVES</span><div id="lives-value" class="hearts">♥ ♥ ♥ ♥ ♥</div><span id="lives-count">5/5</span></div>
             <div class="progress-wrap"><div class="progress-track"><div id="progress-bar" class="progress-fill"></div><i class="station-marker" title="Fuel station"></i></div><div class="progress-labels"><span>START</span><span id="distance-value">0 / 2000 m</span><span>FINISH</span></div></div>
           </div>
           <div class="gear-gauge"><span>GEAR</span><strong id="gear-value">N</strong></div>
         </section>
         <div id="toast" class="toast"></div>
+        <pre id="debug-panel" class="debug-panel hidden" aria-live="polite"></pre>
+        <div id="screen-shake" class="screen-shake"></div>
       </div>
       <div id="screen-layer" class="screen-layer">
         <section id="menu-screen" class="screen-card menu-card">
-          <div class="eyebrow">THE HIGHWAY TO BIG-O</div>
-          <h1>DSA<br /><span>RACER</span></h1>
-          <p>Drive fast. Think faster. Prove your algorithmic instincts on the open road.</p>
-          <button id="play-button" class="primary-button">START YOUR ENGINE <span>→</span></button>
+          <div class="eyebrow">THE HIGHWAY TO BIG-O</div><h1>DSA<br /><span>RACER</span></h1>
+          <p>Drive fast. Think faster. Race through algorithmic challenges.</p>
+          <button id="play-button" class="primary-button">PLAY <span>→</span></button>
+          <button id="practice-button" class="secondary-button">PRACTICE MODE</button>
+          <div class="menu-grid"><button id="garage-menu-button" class="menu-tile">GARAGE</button><button id="language-menu-button" class="menu-tile">LANGUAGE</button></div>
           <button id="how-button" class="text-button">HOW TO PLAY</button>
-          <div class="best-score">PERSONAL BEST <strong id="menu-high-score">0</strong></div>
+          <div class="wallet menu-wallet"><span>🪙 <b id="menu-coins">0</b></span><span>$<b id="menu-dollars">0</b></span><span>BEST <b id="menu-high-score">0</b></span></div>
         </section>
-        <section id="how-screen" class="screen-card hidden">
-          <div class="eyebrow">QUICK BRIEFING</div><h2>HOW TO PLAY</h2>
-          <p>Use <b>W / ↑</b> to accelerate, <b>S / ↓</b> to brake and <b>A / D</b> or arrow keys to steer. Space is your handbrake; <b>P</b> pauses the race.</p>
-          <p>Reach the fuel station halfway through each highway and answer a DSA question. Correct answers restore all fuel; a wrong answer still gets you 30%.</p>
-          <p>Avoid traffic, protect your health, and reach the finish. Questions get harder as you progress.</p>
-          <button id="back-menu-button" class="primary-button">GOT IT</button>
+        <section id="language-screen" class="screen-card wide-card hidden">
+          <div class="eyebrow">PICK YOUR CODE</div><h2>CHOOSE YOUR LANGUAGE</h2><p>Your quizzes will use this language for code snippets and language-specific questions.</p>
+          <div id="language-grid" class="language-grid"></div><button id="language-back-button" class="text-button">BACK TO MENU</button>
+        </section>
+        <section id="levels-screen" class="screen-card wide-card hidden">
+          <div class="eyebrow">CHOOSE YOUR NEXT RUN</div><h2>LEVEL SELECT</h2>
+          <div class="level-select-controls"><label>QUESTION TOPIC <select id="topic-filter"></select></label><span id="level-language-label"></span></div>
+          <div id="level-grid" class="level-grid"></div><button id="levels-back-button" class="text-button">BACK TO MENU</button>
+        </section>
+        <section id="practice-screen" class="screen-card hidden">
+          <div class="eyebrow">NO TRAFFIC. NO FUEL PRESSURE.</div><h2>PRACTICE RUN</h2>
+          <p>Answer endless questions, build a streak, and earn coins. Daily practice rewards are capped.</p>
+          <label class="practice-topic-label">QUESTION TOPIC <select id="practice-topic-filter"></select></label>
+          <div class="practice-stats"><span>SCORE <b id="practice-score">0</b></span><span>ACCURACY <b id="practice-accuracy">0%</b></span><span>STREAK <b id="practice-streak">0</b> 🔥</span></div>
+          <button id="practice-start-button" class="primary-button">START PRACTICE</button><button id="practice-back-button" class="text-button">BACK TO MENU</button>
+        </section>
+        <section id="how-screen" class="screen-card hidden"><div class="eyebrow">QUICK BRIEFING</div><h2>HOW TO PLAY</h2>
+          <p>Use <b>W / ↑</b> to accelerate, <b>S / ↓</b> to brake and <b>A / D</b> or arrow keys to steer. Space is your handbrake; <b>P</b> pauses.</p>
+          <p>Collect road coins, avoid traffic, and answer the fuel-stop question halfway along each road. Wrong answers refill only 10%.</p>
+          <p>Complete levels to earn stars and unlock the next road. Cars have unique handling, speed, fuel use, and durability.</p><button id="back-menu-button" class="primary-button">GOT IT</button>
         </section>
         <section id="pause-screen" class="screen-card hidden"><div class="eyebrow">PIT STOP</div><h2>RACE PAUSED</h2><p>Catch your breath. The road will wait.</p><button id="resume-button" class="primary-button">RESUME RACE</button><button id="quit-button" class="text-button">BACK TO MENU</button></section>
-        <section id="result-screen" class="screen-card hidden">
-          <div id="result-eyebrow" class="eyebrow">RACE REPORT</div><h2 id="result-title">LEVEL COMPLETE</h2><p id="result-message">Great driving.</p>
+        <section id="result-screen" class="screen-card hidden"><div id="result-eyebrow" class="eyebrow">RACE REPORT</div><h2 id="result-title">LEVEL COMPLETE</h2><p id="result-message">Great driving.</p>
           <div class="result-stats"><div><span>SCORE</span><strong id="result-score">0</strong></div><div><span>TIME</span><strong id="result-time">0:00</strong></div><div><span>ACCURACY</span><strong id="result-accuracy">0%</strong></div></div>
-          <button id="result-button" class="primary-button">NEXT LEVEL <span>→</span></button>
+          <div id="result-rewards" class="result-rewards"></div><div id="result-stars" class="result-stars"></div>
+          <button id="next-level-button" class="primary-button">NEXT LEVEL <span>→</span></button><button id="replay-button" class="secondary-button">REPLAY LEVEL</button><button id="result-garage-button" class="text-button">VISIT GARAGE</button><button id="result-menu-button" class="text-button">MAIN MENU</button>
+        </section>
+        <section id="gameover-screen" class="screen-card hidden"><div class="eyebrow">RACE ENDED</div><h2 id="gameover-title">GAME OVER</h2><p id="gameover-message">Your car cannot continue.</p>
+          <button id="retry-level-button" class="primary-button">RETRY LEVEL</button><button id="revive-button" class="secondary-button">REVIVE · 100 COINS</button><button id="gameover-menu-button" class="text-button">MAIN MENU</button>
         </section>
       </div>
       <section id="quiz-modal" class="quiz-modal hidden" role="dialog" aria-modal="true" aria-labelledby="quiz-question">
-        <div class="quiz-panel">
-          <div class="quiz-top"><div><div class="eyebrow">FUEL STOP · <span id="quiz-topic">ARRAYS</span></div><span id="quiz-difficulty" class="difficulty-tag">EASY</span></div><div class="timer-ring" id="quiz-timer"><strong id="timer-value">30</strong><span>SEC</span></div></div>
-          <h2 id="quiz-question"></h2><pre id="quiz-code" class="hidden"></pre>
-          <div id="quiz-options" class="quiz-options"></div>
+        <div class="quiz-panel"><div class="quiz-top"><div><div class="eyebrow">FUEL STOP · <span id="quiz-topic">ARRAYS</span></div><span id="quiz-difficulty" class="difficulty-tag">EASY</span></div><div class="timer-ring" id="quiz-timer"><strong id="timer-value">30</strong><span>SEC</span></div></div>
+          <h2 id="quiz-question"></h2><pre id="quiz-code" class="hidden"></pre><div id="quiz-options" class="quiz-options"></div>
           <div class="quiz-footer"><button id="hint-button" class="hint-button">💡 HINT <span>(−10 PTS)</span></button><span id="quiz-feedback" aria-live="polite"></span></div>
-          <p id="quiz-explanation" class="quiz-explanation hidden"></p>
+          <button id="buy-fuel-button" class="secondary-button hidden">BUY EXTRA FUEL · 50 COINS = +30%</button><p id="quiz-explanation" class="quiz-explanation hidden"></p>
         </div>
       </section>
-      <div id="touch-controls" class="touch-controls hidden" aria-label="Touch driving controls">
-        <div class="touch-steer"><button data-control="left" aria-label="Steer left">◀</button><button data-control="right" aria-label="Steer right">▶</button></div>
-        <div class="touch-pedals"><button data-control="brake" aria-label="Brake">BRAKE</button><button data-control="accelerate" aria-label="Accelerate">GAS</button></div>
-      </div>
+      <section id="garage-screen" class="garage-screen hidden">
+        <div class="garage-panel"><header class="garage-header"><div><div class="eyebrow">YOUR COLLECTION</div><h2>GARAGE</h2></div><span id="garage-wallet" class="wallet"></span><button id="garage-close-button" class="icon-button" aria-label="Close garage">×</button></header>
+          <div class="garage-layout"><div class="garage-preview-wrap"><canvas id="garage-preview" aria-label="Rotating car preview"></canvas><h3 id="garage-car-name">Starter Hatchback</h3><div id="garage-stats"></div>
+              <div class="paint-row"><span>PAINT</span><div id="paint-options" class="paint-options"></div></div>
+              <button id="garage-select-button" class="secondary-button">SELECT CAR</button><button id="garage-buy-button" class="primary-button">BUY CAR</button><p id="garage-car-price" class="garage-car-price"></p>
+            </div><div id="garage-car-list" class="garage-car-list"></div></div>
+        </div>
+      </section>
+      <div id="touch-controls" class="touch-controls hidden" aria-label="Touch driving controls"><div class="touch-steer"><button data-control="left" aria-label="Steer left">◀</button><button data-control="right" aria-label="Steer right">▶</button></div><div class="touch-pedals"><button data-control="brake" aria-label="Brake">BRAKE</button><button data-control="accelerate" aria-label="Accelerate">GAS</button></div></div>
       <button id="mute-button" class="mute-button" aria-label="Mute audio">♪</button>
       <div id="loading-screen" class="loading-screen"><span class="loading-mark">D</span><span>PREPARING THE GRID</span></div>
     </main>

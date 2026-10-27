@@ -1,0 +1,162 @@
+[
+  {
+    "id": "java-hard-01",
+    "topic": "Sorting",
+    "difficulty": "hard",
+    "language": "Java",
+    "question": "How does merge sort count inversions in O(n log n)?",
+    "code": "Arrays.sort(values);",
+    "options": [
+      "Count remaining left items when a right item is smaller",
+      "Compare every pair",
+      "Count adjacent swaps only",
+      "Binary search every pair"
+    ],
+    "answerIndex": 0,
+    "explanation": "When a right item precedes the next left item, it forms inversions with all remaining left items."
+  },
+  {
+    "id": "java-hard-02",
+    "topic": "Strings",
+    "difficulty": "hard",
+    "language": "Java",
+    "question": "What does the KMP prefix table store?",
+    "code": "String word = \"race\";",
+    "options": [
+      "Longest proper prefix that is also a suffix",
+      "Sorted character positions",
+      "Character frequencies",
+      "Every substring hash"
+    ],
+    "answerIndex": 0,
+    "explanation": "The prefix table avoids rechecking characters after a pattern mismatch."
+  },
+  {
+    "id": "java-hard-03",
+    "topic": "Linked List",
+    "difficulty": "hard",
+    "language": "Java",
+    "question": "When reversing a linked list, what should be saved before changing current.next?",
+    "code": "Node next = node.next;",
+    "options": [
+      "The next node reference",
+      "The list length",
+      "The tail index",
+      "The previous node value"
+    ],
+    "answerIndex": 0,
+    "explanation": "Save the next reference before rewiring, or the remaining list becomes unreachable."
+  },
+  {
+    "id": "java-hard-04",
+    "topic": "Stack",
+    "difficulty": "hard",
+    "language": "Java",
+    "question": "Why is a monotonic stack next-greater algorithm O(n)?",
+    "code": "Deque<Integer> items = new ArrayDeque<>(); items.push(4);",
+    "options": [
+      "Each item is pushed and popped at most once",
+      "It sorts after each push",
+      "It checks every pair",
+      "It binary-searches the stack"
+    ],
+    "answerIndex": 0,
+    "explanation": "Each index enters and leaves the stack once, so total stack operations are linear."
+  },
+  {
+    "id": "java-hard-05",
+    "topic": "Trees",
+    "difficulty": "hard",
+    "language": "Java",
+    "question": "What keeps AVL tree height O(log n)?",
+    "code": "Node next = node.next;",
+    "options": [
+      "Rotations restore a bounded child-height difference",
+      "Every node has exactly two children",
+      "Values are also stored in a hash map",
+      "The tree never changes"
+    ],
+    "answerIndex": 0,
+    "explanation": "AVL rotations preserve a balance factor of at most one at each node."
+  },
+  {
+    "id": "java-hard-06",
+    "topic": "Graphs",
+    "difficulty": "hard",
+    "language": "Java",
+    "question": "What does Tarjan?s algorithm use to find strongly connected components in O(V+E)?",
+    "code": "Node next = node.next;",
+    "options": [
+      "DFS discovery indices and low-link values",
+      "A sorted edge list",
+      "A BFS from every vertex",
+      "All-pairs path lengths"
+    ],
+    "answerIndex": 0,
+    "explanation": "Low-link values summarize reachable ancestors in the active DFS stack."
+  },
+  {
+    "id": "java-hard-07",
+    "topic": "Searching",
+    "difficulty": "hard",
+    "language": "Java",
+    "question": "What is Quickselect average and worst-case time?",
+    "code": "Arrays.sort(values);",
+    "options": [
+      "Average O(n), worst O(n?)",
+      "Average O(n log n), worst O(n log n)",
+      "Average O(log n), worst O(n)",
+      "Average O(n?), worst O(n?)"
+    ],
+    "answerIndex": 0,
+    "explanation": "Typical pivots give linear expected work; repeatedly poor pivots can produce quadratic work."
+  },
+  {
+    "id": "java-hard-08",
+    "topic": "Sorting",
+    "difficulty": "hard",
+    "language": "Java",
+    "question": "What does a stable sorting algorithm guarantee?",
+    "code": "Arrays.sort(values);",
+    "options": [
+      "Equal-key records keep their relative input order",
+      "Runtime is always O(n log n)",
+      "It uses O(1) extra space",
+      "It never compares equal values"
+    ],
+    "answerIndex": 0,
+    "explanation": "Stability preserves the input ordering of records with equal keys."
+  },
+  {
+    "id": "java-hard-09",
+    "topic": "DP",
+    "difficulty": "hard",
+    "language": "Java",
+    "question": "What are the edit-distance transitions?",
+    "code": "int[] dp = new int[n + 1];",
+    "options": [
+      "Insert, delete, substitute or match",
+      "Sort, search, merge",
+      "Push, pop, peek",
+      "Union, find, split"
+    ],
+    "answerIndex": 0,
+    "explanation": "The recurrence considers insertion, deletion, and diagonal match/substitution."
+  },
+  {
+    "id": "java-hard-10",
+    "topic": "Recursion",
+    "difficulty": "hard",
+    "language": "Java",
+    "question": "What does this recursive sum snippet print?",
+    "code": "static int sum(int n) { return n == 0 ? 0 : n + sum(n - 1); }\nSystem.out.println(sum(3));",
+    "options": [
+      "6",
+      "3",
+      "0",
+      "Compilation error"
+    ],
+    "answerIndex": 0,
+    "explanation": "The recursive calls add 3 + 2 + 1 and stop at the zero base case."
+  }
+]

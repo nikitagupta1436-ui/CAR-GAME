@@ -1,0 +1,162 @@
+[
+  {
+    "id": "cpp-medium-01",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "language": "C++",
+    "question": "For Two Sum, what gives expected O(1) complement lookup per element?",
+    "code": "vector<int> values = {1, 2, 3};",
+    "options": [
+      "A hash map of seen values",
+      "Nested loops",
+      "Sorting only",
+      "A FIFO queue"
+    ],
+    "answerIndex": 0,
+    "explanation": "For each x, test whether target - x has already appeared in a hash map."
+  },
+  {
+    "id": "cpp-medium-02",
+    "topic": "Strings",
+    "difficulty": "medium",
+    "language": "C++",
+    "question": "How can lowercase anagrams be checked in O(n)?",
+    "code": "string word = \"race\";",
+    "options": [
+      "Compare character frequency counts",
+      "Compare first characters",
+      "Test substring membership",
+      "Reverse both strings"
+    ],
+    "answerIndex": 0,
+    "explanation": "Equal frequency for every character means the strings contain the same multiset."
+  },
+  {
+    "id": "cpp-medium-03",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "language": "C++",
+    "question": "What pointer speeds detect a cycle with Floyd?s algorithm?",
+    "code": "int* next = node->next;",
+    "options": [
+      "Both advance one node",
+      "One advances one, the other two",
+      "One advances two, the other three",
+      "One remains at the head"
+    ],
+    "answerIndex": 1,
+    "explanation": "The fast pointer gains one node per step and meets the slow pointer if a cycle exists."
+  },
+  {
+    "id": "cpp-medium-04",
+    "topic": "Stack",
+    "difficulty": "medium",
+    "language": "C++",
+    "question": "How can a stack return its minimum in O(1)?",
+    "code": "stack<int> items; items.push(4);",
+    "options": [
+      "Track prefix minima in an auxiliary stack",
+      "Scan all values per query",
+      "Keep values sorted",
+      "Use a queue instead"
+    ],
+    "answerIndex": 0,
+    "explanation": "An auxiliary stack stores the minimum at each stack depth."
+  },
+  {
+    "id": "cpp-medium-05",
+    "topic": "Queue",
+    "difficulty": "medium",
+    "language": "C++",
+    "question": "In a queue implemented with two stacks, why is dequeue O(1) amortized?",
+    "code": "queue<int> items; items.push(4);",
+    "options": [
+      "Each item transfers stacks at most once",
+      "Both stacks remain sorted",
+      "The queue has fixed size",
+      "Dequeue uses binary search"
+    ],
+    "answerIndex": 0,
+    "explanation": "Each item is pushed, transferred once, then popped, so the total work is linear."
+  },
+  {
+    "id": "cpp-medium-06",
+    "topic": "Trees",
+    "difficulty": "medium",
+    "language": "C++",
+    "question": "Which structure supports level-order tree traversal?",
+    "code": "int value = 7; cout << value;",
+    "options": [
+      "Queue",
+      "Stack only",
+      "Sorted array",
+      "Hash set"
+    ],
+    "answerIndex": 0,
+    "explanation": "A FIFO queue visits nodes in increasing depth order."
+  },
+  {
+    "id": "cpp-medium-07",
+    "topic": "Graphs",
+    "difficulty": "medium",
+    "language": "C++",
+    "question": "A topological ordering exists for which directed graphs?",
+    "code": "int* next = node->next;",
+    "options": [
+      "Directed acyclic graphs",
+      "Every connected graph",
+      "Only complete graphs",
+      "Graphs where every degree is two"
+    ],
+    "answerIndex": 0,
+    "explanation": "A directed acyclic graph (DAG) has a topological ordering."
+  },
+  {
+    "id": "cpp-medium-08",
+    "topic": "Sorting",
+    "difficulty": "medium",
+    "language": "C++",
+    "question": "What is merge sort worst-case time?",
+    "code": "sort(values.begin(), values.end());",
+    "options": [
+      "O(n)",
+      "O(n log n)",
+      "O(n?)",
+      "O(log n)"
+    ],
+    "answerIndex": 1,
+    "explanation": "Merge sort has log n levels with O(n) work per level."
+  },
+  {
+    "id": "cpp-medium-09",
+    "topic": "Searching",
+    "difficulty": "medium",
+    "language": "C++",
+    "question": "What does lower_bound(target) return in a sorted array?",
+    "code": "sort(values.begin(), values.end());",
+    "options": [
+      "First index with value at least target",
+      "Last index below target",
+      "Any equal value",
+      "First index greater than target"
+    ],
+    "answerIndex": 0,
+    "explanation": "Lower bound finds the insertion position before the first value not less than target."
+  },
+  {
+    "id": "cpp-medium-10",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "language": "C++",
+    "question": "What value is printed by this language-specific frequency lookup?",
+    "code": "unordered_map<string, int> frequency; frequency[\"cat\"] = 2; cout << frequency[\"cat\"];",
+    "options": [
+      "2",
+      "0",
+      "cat",
+      "Compilation error"
+    ],
+    "answerIndex": 0,
+    "explanation": "The snippet stores the value 2 under the key or index shown and reads it back."
+  }
+]

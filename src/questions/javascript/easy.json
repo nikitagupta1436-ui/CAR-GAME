@@ -1,0 +1,162 @@
+[
+  {
+    "id": "javascript-easy-01",
+    "topic": "Arrays",
+    "difficulty": "easy",
+    "language": "JavaScript",
+    "question": "In a zero-indexed array, what is the index of the first element?",
+    "code": "const values = [1, 2, 3];",
+    "options": [
+      "0",
+      "1",
+      "-1",
+      "It depends on the array length"
+    ],
+    "answerIndex": 0,
+    "explanation": "Zero-based indexing starts at 0, so the first element is at index 0."
+  },
+  {
+    "id": "javascript-easy-02",
+    "topic": "Strings",
+    "difficulty": "easy",
+    "language": "JavaScript",
+    "question": "What does this language-specific string-indexing snippet print?",
+    "code": "const word = \"race\"; console.log(word[1]);",
+    "options": [
+      "a",
+      "r",
+      "e",
+      "Compilation error"
+    ],
+    "answerIndex": 0,
+    "explanation": "String indexing in this snippet selects the character at zero-based index 1, which is a."
+  },
+  {
+    "id": "javascript-easy-03",
+    "topic": "Stack",
+    "difficulty": "easy",
+    "language": "JavaScript",
+    "question": "Which rule describes how a stack removes items?",
+    "code": "const items = []; items.push(4); const value = items.pop();",
+    "options": [
+      "FIFO: first in, first out",
+      "LIFO: last in, first out",
+      "Smallest item first",
+      "Items are removed at random"
+    ],
+    "answerIndex": 1,
+    "explanation": "A stack is LIFO: the most recently pushed item is popped first."
+  },
+  {
+    "id": "javascript-easy-04",
+    "topic": "Queue",
+    "difficulty": "easy",
+    "language": "JavaScript",
+    "question": "Which rule describes how a queue removes items?",
+    "code": "const items = []; items.push(4); const value = items.shift();",
+    "options": [
+      "LIFO",
+      "FIFO: first in, first out",
+      "Largest item first",
+      "Items are removed at random"
+    ],
+    "answerIndex": 1,
+    "explanation": "A queue is FIFO: the earliest enqueued item leaves first."
+  },
+  {
+    "id": "javascript-easy-05",
+    "topic": "Linked List",
+    "difficulty": "easy",
+    "language": "JavaScript",
+    "question": "What does a singly linked-list node store besides its value?",
+    "code": "const next = node.next;",
+    "options": [
+      "A reference to the next node",
+      "Every node index",
+      "A sorted copy of the list",
+      "A reference to the root"
+    ],
+    "answerIndex": 0,
+    "explanation": "A singly linked-list node stores its value and a reference to its successor."
+  },
+  {
+    "id": "javascript-easy-06",
+    "topic": "Trees",
+    "difficulty": "easy",
+    "language": "JavaScript",
+    "question": "What is the root of a rooted tree?",
+    "code": "const next = node.next;",
+    "options": [
+      "The top node with no parent",
+      "The leftmost leaf",
+      "The node with most children",
+      "A node with no children"
+    ],
+    "answerIndex": 0,
+    "explanation": "The root is the unique starting node and has no parent."
+  },
+  {
+    "id": "javascript-easy-07",
+    "topic": "Graphs",
+    "difficulty": "easy",
+    "language": "JavaScript",
+    "question": "What does an edge represent in a graph?",
+    "code": "const next = node.next;",
+    "options": [
+      "A connection between vertices",
+      "A sorted vertex list",
+      "A vertex with no neighbors",
+      "A graph traversal"
+    ],
+    "answerIndex": 0,
+    "explanation": "An edge represents a connection or relationship between vertices."
+  },
+  {
+    "id": "javascript-easy-08",
+    "topic": "Sorting",
+    "difficulty": "easy",
+    "language": "JavaScript",
+    "question": "What is the result of sorting [4, 1, 3] in ascending order?",
+    "code": "values.sort((a, b) => a - b);",
+    "options": [
+      "[4, 3, 1]",
+      "[1, 3, 4]",
+      "[3, 1, 4]",
+      "[1, 4, 3]"
+    ],
+    "answerIndex": 1,
+    "explanation": "Ascending order runs from the smallest value to the largest."
+  },
+  {
+    "id": "javascript-easy-09",
+    "topic": "Searching",
+    "difficulty": "easy",
+    "language": "JavaScript",
+    "question": "What condition does binary search require?",
+    "code": "values.sort((a, b) => a - b);",
+    "options": [
+      "Sorted data",
+      "Distinct values only",
+      "A power-of-two length",
+      "Positive values only"
+    ],
+    "answerIndex": 0,
+    "explanation": "Binary search uses ordering to discard half the remaining search range."
+  },
+  {
+    "id": "javascript-easy-10",
+    "topic": "Time Complexity",
+    "difficulty": "easy",
+    "language": "JavaScript",
+    "question": "A loop visits each of n elements once. What is its time complexity?",
+    "code": "for (let i = 0; i < n; i++) total += i;",
+    "options": [
+      "O(1)",
+      "O(log n)",
+      "O(n)",
+      "O(n?)"
+    ],
+    "answerIndex": 2,
+    "explanation": "One constant amount of work per element gives linear O(n) time."
+  }
+]

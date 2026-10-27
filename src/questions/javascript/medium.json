@@ -1,0 +1,162 @@
+[
+  {
+    "id": "javascript-medium-01",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "language": "JavaScript",
+    "question": "For Two Sum, what gives expected O(1) complement lookup per element?",
+    "code": "const values = [1, 2, 3];",
+    "options": [
+      "A hash map of seen values",
+      "Nested loops",
+      "Sorting only",
+      "A FIFO queue"
+    ],
+    "answerIndex": 0,
+    "explanation": "For each x, test whether target - x has already appeared in a hash map."
+  },
+  {
+    "id": "javascript-medium-02",
+    "topic": "Strings",
+    "difficulty": "medium",
+    "language": "JavaScript",
+    "question": "How can lowercase anagrams be checked in O(n)?",
+    "code": "const word = \"race\";",
+    "options": [
+      "Compare character frequency counts",
+      "Compare first characters",
+      "Test substring membership",
+      "Reverse both strings"
+    ],
+    "answerIndex": 0,
+    "explanation": "Equal frequency for every character means the strings contain the same multiset."
+  },
+  {
+    "id": "javascript-medium-03",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "language": "JavaScript",
+    "question": "What pointer speeds detect a cycle with Floyd?s algorithm?",
+    "code": "const next = node.next;",
+    "options": [
+      "Both advance one node",
+      "One advances one, the other two",
+      "One advances two, the other three",
+      "One remains at the head"
+    ],
+    "answerIndex": 1,
+    "explanation": "The fast pointer gains one node per step and meets the slow pointer if a cycle exists."
+  },
+  {
+    "id": "javascript-medium-04",
+    "topic": "Stack",
+    "difficulty": "medium",
+    "language": "JavaScript",
+    "question": "How can a stack return its minimum in O(1)?",
+    "code": "const items = []; items.push(4); const value = items.pop();",
+    "options": [
+      "Track prefix minima in an auxiliary stack",
+      "Scan all values per query",
+      "Keep values sorted",
+      "Use a queue instead"
+    ],
+    "answerIndex": 0,
+    "explanation": "An auxiliary stack stores the minimum at each stack depth."
+  },
+  {
+    "id": "javascript-medium-05",
+    "topic": "Queue",
+    "difficulty": "medium",
+    "language": "JavaScript",
+    "question": "In a queue implemented with two stacks, why is dequeue O(1) amortized?",
+    "code": "const items = []; items.push(4); const value = items.shift();",
+    "options": [
+      "Each item transfers stacks at most once",
+      "Both stacks remain sorted",
+      "The queue has fixed size",
+      "Dequeue uses binary search"
+    ],
+    "answerIndex": 0,
+    "explanation": "Each item is pushed, transferred once, then popped, so the total work is linear."
+  },
+  {
+    "id": "javascript-medium-06",
+    "topic": "Trees",
+    "difficulty": "medium",
+    "language": "JavaScript",
+    "question": "Which structure supports level-order tree traversal?",
+    "code": "const value = 7; console.log(value);",
+    "options": [
+      "Queue",
+      "Stack only",
+      "Sorted array",
+      "Hash set"
+    ],
+    "answerIndex": 0,
+    "explanation": "A FIFO queue visits nodes in increasing depth order."
+  },
+  {
+    "id": "javascript-medium-07",
+    "topic": "Graphs",
+    "difficulty": "medium",
+    "language": "JavaScript",
+    "question": "A topological ordering exists for which directed graphs?",
+    "code": "const next = node.next;",
+    "options": [
+      "Directed acyclic graphs",
+      "Every connected graph",
+      "Only complete graphs",
+      "Graphs where every degree is two"
+    ],
+    "answerIndex": 0,
+    "explanation": "A directed acyclic graph (DAG) has a topological ordering."
+  },
+  {
+    "id": "javascript-medium-08",
+    "topic": "Sorting",
+    "difficulty": "medium",
+    "language": "JavaScript",
+    "question": "What is merge sort worst-case time?",
+    "code": "values.sort((a, b) => a - b);",
+    "options": [
+      "O(n)",
+      "O(n log n)",
+      "O(n?)",
+      "O(log n)"
+    ],
+    "answerIndex": 1,
+    "explanation": "Merge sort has log n levels with O(n) work per level."
+  },
+  {
+    "id": "javascript-medium-09",
+    "topic": "Searching",
+    "difficulty": "medium",
+    "language": "JavaScript",
+    "question": "What does lower_bound(target) return in a sorted array?",
+    "code": "values.sort((a, b) => a - b);",
+    "options": [
+      "First index with value at least target",
+      "Last index below target",
+      "Any equal value",
+      "First index greater than target"
+    ],
+    "answerIndex": 0,
+    "explanation": "Lower bound finds the insertion position before the first value not less than target."
+  },
+  {
+    "id": "javascript-medium-10",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "language": "JavaScript",
+    "question": "What value is printed by this language-specific frequency lookup?",
+    "code": "const frequency = new Map([[\"cat\", 2]]); console.log(frequency.get(\"cat\"));",
+    "options": [
+      "2",
+      "0",
+      "cat",
+      "Compilation error"
+    ],
+    "answerIndex": 0,
+    "explanation": "The snippet stores the value 2 under the key or index shown and reads it back."
+  }
+]

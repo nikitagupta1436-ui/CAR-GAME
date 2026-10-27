@@ -1,6 +1,6 @@
 # DSA Racer
 
-A browser-based low-poly 3D highway racer that turns a mid-race fuel stop into a data-structures-and-algorithms quiz. Built with Three.js, Vite, and vanilla JavaScript modules; all game state is local to the browser.
+DSA Racer is a browser-based low-poly 3D highway racer and coding quiz, built with Three.js, Vite, and vanilla JavaScript modules. Game progress and the entirely in-game economy are stored locally; there is no backend or real-money purchase flow.
 
 ## Run locally
 
@@ -9,7 +9,15 @@ npm install
 npm run dev
 ```
 
-Open the local URL printed by Vite. To create a production build, run `npm run build`; `npm run preview` serves that build.
+Open the local URL printed by Vite. Run `npm run build` for a production build and `npm run preview` to serve it locally.
+
+## Game flow
+
+Choose C++, Java, Python, JavaScript, or C, then select an unlocked level and optional question topic. Complete the highway to earn stars and unlock the next level. Each road has a fuel station halfway through: a correct answer fills the tank, and a wrong answer or timeout gives a 10% emergency refill. After a wrong answer, 50 coins can buy an optional additional 30% fuel. Explanations and the correct answer are shown after every response.
+
+Collect spinning road coins, avoid the reduced and spaced-out traffic, and use your five lives carefully. Each car has different top speed, acceleration, handling, fuel efficiency, and durability. Level completion, quiz streaks, and the daily login bonus award in-game dollars for premium garage cars. There are no real-money transactions. Practice mode has no driving pressure and awards a limited number of coins per day.
+
+The versioned save module (`src/save.js`) stores the chosen language and topic, unlocked levels and best stars/scores, currencies, owned and selected cars/paint, and daily reward tracking. Invalid save data safely falls back to fresh progress.
 
 ## Controls
 
@@ -20,13 +28,13 @@ Open the local URL printed by Vite. To create a production build, run `npm run b
 - **P / Escape:** pause or resume
 - Touch devices have on-screen steering, brake, and accelerator controls.
 
-The highway length grows by 1,000 m per level. Drive to the marked station halfway through each road and answer the 30-second quiz: a correct answer gives a full tank, while a wrong answer or timeout gives 30%. Avoid traffic, reach the finish, and take on harder questions and denser traffic in later levels. The best score is stored in localStorage.
-
 ## Project layout
 
-- `src/main.js` — renderer, game loop, input, and state transitions
-- `src/world.js` — procedural Three.js highway, station, scenery, and lighting
-- `src/car.js`, `src/traffic.js` — player handling and AI traffic
-- `src/fuel.js`, `src/dsaQuiz.js` — fuel rules and question flow
-- `src/questions/` — 15 original questions per difficulty tier
-- `src/ui.js`, `src/audio.js`, `src/levels.js` — HUD, sound, and level configuration
+- `src/main.js` — renderer, input, game loop, and game/practice/progression flow
+- `src/world.js`, `src/car.js`, `src/traffic.js`, `src/coins.js` — world, vehicles, traffic, and pickups
+- `src/fuel.js`, `src/dsaQuiz.js`, `src/questions/{language}/{difficulty}.json` — refueling and language-tagged quizzes
+- `src/save.js`, `src/shop.js`, `src/garage.js` — local progression, economy, purchases, and car preview
+- `src/config/` — gameplay settings, prices, and reward tuning
+- `src/ui.js`, `src/audio.js`, `src/levels.js` — screens/HUD, Web Audio effects, and level setup
+
+Each of the five language folders contains at least ten questions for each of the easy, medium, and hard tiers, including language-specific code snippets and output-prediction questions.

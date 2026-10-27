@@ -54,6 +54,11 @@ export function playRefuelSound() {
   window.setTimeout(() => tone(780, 0.2), 110);
 }
 
+export function playCoinSound() {
+  tone(980, 0.08, "sine", 0.12);
+  window.setTimeout(() => tone(1320, 0.12, "sine", 0.1), 55);
+}
+
 export function toggleMute() {
   muted = !muted;
   if (master) master.gain.setTargetAtTime(muted ? 0 : 0.18, context.currentTime, 0.04);

@@ -1,8 +1,5 @@
 import * as THREE from "three";
 
-export let FUEL_STATION_Z = 0;
-export let FINISH_Z = 0;
-
 let worldObjects = [];
 let clouds = [];
 
@@ -111,12 +108,12 @@ function createStation(scene, z) {
 
 export function createWorld(scene, { length, level = 1, timeOfDay } = {}) {
   if (!Number.isFinite(length) || length <= 0) throw new Error("createWorld requires a positive road length.");
-  FUEL_STATION_Z = length / 2;
-  FINISH_Z = length;
+  const fuelStationZ = length / 2;
+  const finishZ = length;
   worldObjects = [];
   clouds = [];
   scene.background = new THREE.Color(timeOfDay === "night" ? 0x10192a : timeOfDay === "sunset" ? 0xd38662 : 0x9cc9e6);
-  scene.fog = new THREE.Fog(timeOfDay === "night" ? 0x28394b : timeOfDay === "sunset" ? 0xd99a77 : 0xa7c8d9, 230, 750);
+  scene.fog = new THREE.Fog(timeOfDay === "night" ? 0x28394b : timeOfDay === "sunset" ? 0xd99a77 : 0xa7c8d9, 230, 600);
   scene.environment = null;
   const night = timeOfDay === "night";
   const sunset = timeOfDay === "sunset";
@@ -144,13 +141,14 @@ export function createWorld(scene, { length, level = 1, timeOfDay } = {}) {
   const groundTexture = makeGrassTexture();
   groundTexture.repeat.set(35, Math.ceil(length / 100));
   const groundMaterial = new THREE.MeshStandardMaterial({ color: night ? 0x607254 : 0x779052, map: groundTexture, roughness: 1 });
-  const ground = new THREE.Mesh(new THREE.PlaneGeometry(1600, length + 500), groundMaterial);
+  const worldLength = length + 200;
+  const ground = new THREE.Mesh(new THREE.PlaneGeometry(1600, worldLength), groundMaterial);
   ground.rotation.x = -Math.PI / 2;
   ground.position.set(0, -0.16, length / 2);
   ground.receiveShadow = true;
   scene.add(ground);
   const roadMaterial = new THREE.MeshStandardMaterial({ color: 0x55595b, map: makeAsphaltTexture(), roughness: 0.94 });
-  const road = new THREE.Mesh(new THREE.PlaneGeometry(16, length), roadMaterial);
+  const road = new THREE.Mesh(new THREE.PlaneGeometry(16, worldLength), roadMaterial);
   road.rotation.x = -Math.PI / 2;
   road.position.set(0, 0, length / 2);
   road.receiveShadow = true;
@@ -160,10 +158,10 @@ export function createWorld(scene, { length, level = 1, timeOfDay } = {}) {
   const yellow = new THREE.MeshStandardMaterial({ color: 0xf3c939, roughness: 0.7 });
   const lineGeometry = new THREE.BoxGeometry(0.12, 0.025, 4);
   for (const x of [-4, 4]) {
-    const dashes = new THREE.InstancedMesh(lineGeometry, white, Math.ceil(length / 8));
+    const dashes = new THREE.InstancedMesh(lineGeometry, white, Math.ceil(worldLength / 8));
     const matrix = new THREE.Object3D();
     let count = 0;
-    for (let z = 4; z < length; z += 8) {
+    for (let z = -100; z < length + 100; z += 8) {
       matrix.position.set(x, 0.025, z);
       matrix.updateMatrix();
       dashes.setMatrixAt(count++, matrix.matrix);
@@ -173,7 +171,7 @@ export function createWorld(scene, { length, level = 1, timeOfDay } = {}) {
     scene.add(dashes);
   }
   for (const x of [-0.14, 0.14, -7.82, 7.82]) {
-    const stripe = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.03, length), x > -1 && x < 1 ? yellow : white);
+    const stripe = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.03, worldLength), x > -1 && x < 1 ? yellow : white);
     stripe.position.set(x, 0.03, length / 2);
     scene.add(stripe);
   }
@@ -181,13 +179,13 @@ export function createWorld(scene, { length, level = 1, timeOfDay } = {}) {
   const railMaterial = new THREE.MeshStandardMaterial({ color: 0x687279, metalness: 0.65, roughness: 0.38 });
   const postGeometry = new THREE.BoxGeometry(0.18, 0.75, 0.18);
   for (const x of [-8.3, 8.3]) {
-    const curb = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.28, length), curbMaterial);
+    const curb = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.28, worldLength), curbMaterial);
     curb.position.set(x, 0.08, length / 2);
     curb.castShadow = true;
     scene.add(curb);
     const railSegments = x > 0
-      ? [[0, Math.max(0, FUEL_STATION_Z - 15)], [FUEL_STATION_Z + 15, length]]
-      : [[0, length]];
+      ? [[-100, Math.max(-100, fuelStationZ - 15)], [fuelStationZ + 15, length + 100]]
+      : [[-100, length + 100]];
     for (const [start, end] of railSegments) {
       if (end <= start) continue;
       const rail = new THREE.Mesh(new THREE.BoxGeometry(0.18, 0.65, end - start), railMaterial);
@@ -195,12 +193,12 @@ export function createWorld(scene, { length, level = 1, timeOfDay } = {}) {
       rail.castShadow = true;
       scene.add(rail);
     }
-    const postCount = Math.ceil(length / 6);
+    const postCount = Math.ceil(worldLength / 6);
     const posts = new THREE.InstancedMesh(postGeometry, curbMaterial, postCount);
     const transform = new THREE.Object3D();
     let postIndex = 0;
-    for (let z = 0; z < length; z += 6) {
-      if (x > 0 && Math.abs(z - FUEL_STATION_Z) < 15) continue;
+    for (let z = -100; z < length + 100; z += 6) {
+      if (x > 0 && Math.abs(z - fuelStationZ) < 15) continue;
       transform.position.set(x > 0 ? 9.1 : -9.1, 0.55, z);
       transform.updateMatrix();
       posts.setMatrixAt(postIndex++, transform.matrix);
@@ -212,14 +210,14 @@ export function createWorld(scene, { length, level = 1, timeOfDay } = {}) {
 
   const treeGeometry = new THREE.ConeGeometry(1.7, 5, 5);
   const treeMaterials = [new THREE.MeshStandardMaterial({ color: 0x315e42 }), new THREE.MeshStandardMaterial({ color: 0x43734b }), new THREE.MeshStandardMaterial({ color: 0x597a4c })];
-  const treeCount = Math.min(1200, Math.floor(length * 0.35));
+  const treeCount = Math.min(1200, Math.floor(worldLength * 0.35));
   for (let variant = 0; variant < treeMaterials.length; variant += 1) {
     const instances = new THREE.InstancedMesh(treeGeometry, treeMaterials[variant], Math.ceil(treeCount / treeMaterials.length));
     const dummy = new THREE.Object3D();
     let index = 0;
     for (let i = variant; i < treeCount; i += treeMaterials.length) {
       const side = i % 2 ? 1 : -1;
-      const z = Math.random() * length;
+      const z = Math.random() * worldLength - 100;
       const x = side * (16 + Math.random() * 170);
       dummy.position.set(x, 2.3, z);
       const scale = 0.55 + Math.random() * 1.4;
@@ -232,24 +230,24 @@ export function createWorld(scene, { length, level = 1, timeOfDay } = {}) {
     instances.instanceMatrix.needsUpdate = true;
     scene.add(instances);
   }
-  const rockCount = Math.min(500, Math.floor(length * 0.12));
+  const rockCount = Math.min(500, Math.floor(worldLength * 0.12));
   const rocks = new THREE.InstancedMesh(new THREE.DodecahedronGeometry(1.2, 0), new THREE.MeshStandardMaterial({ color: 0x777a73, roughness: 1 }), rockCount);
   const rockTransform = new THREE.Object3D();
   for (let index = 0; index < rockCount; index += 1) {
     const scale = 0.35 + Math.random() * 1.3;
-    rockTransform.position.set((Math.random() < 0.5 ? -1 : 1) * (16 + Math.random() * 100), scale * 0.55, Math.random() * length);
+    rockTransform.position.set((Math.random() < 0.5 ? -1 : 1) * (16 + Math.random() * 100), scale * 0.55, Math.random() * worldLength - 100);
     rockTransform.scale.set(scale * 1.3, scale, scale);
     rockTransform.rotation.set(Math.random(), Math.random() * Math.PI, Math.random());
     rockTransform.updateMatrix();
     rocks.setMatrixAt(index, rockTransform.matrix);
   }
   scene.add(rocks);
-  const bushCount = Math.min(600, Math.floor(length * 0.14));
+  const bushCount = Math.min(600, Math.floor(worldLength * 0.14));
   const bushes = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(1.2, 0), new THREE.MeshStandardMaterial({ color: 0x436440, roughness: 1 }), bushCount);
   const bushTransform = new THREE.Object3D();
   for (let index = 0; index < bushCount; index += 1) {
     const scale = 0.45 + Math.random() * 1.2;
-    bushTransform.position.set((Math.random() < 0.5 ? -1 : 1) * (15 + Math.random() * 75), scale * 0.65, Math.random() * length);
+    bushTransform.position.set((Math.random() < 0.5 ? -1 : 1) * (15 + Math.random() * 75), scale * 0.65, Math.random() * worldLength - 100);
     bushTransform.scale.set(scale * 1.4, scale, scale);
     bushTransform.rotation.y = Math.random() * Math.PI;
     bushTransform.updateMatrix();
@@ -259,13 +257,13 @@ export function createWorld(scene, { length, level = 1, timeOfDay } = {}) {
 
   const lampMaterial = new THREE.MeshStandardMaterial({ color: 0x272e31, metalness: 0.65, roughness: 0.4 });
   const lampGlow = new THREE.MeshStandardMaterial({ color: night ? 0xffedb0 : 0xffe7b7, emissive: night ? 0xffce68 : 0xffd596, emissiveIntensity: night ? 2 : 0.15 });
-  const lampCount = Math.ceil((length - 30) / 40) * 2;
+  const lampCount = Math.ceil(worldLength / 40) * 2;
   const poleInstances = new THREE.InstancedMesh(new THREE.CylinderGeometry(0.11, 0.16, 7, 6), lampMaterial, lampCount);
   const armInstances = new THREE.InstancedMesh(new THREE.BoxGeometry(2.2, 0.12, 0.12), lampMaterial, lampCount);
   const bulbInstances = new THREE.InstancedMesh(new THREE.BoxGeometry(0.6, 0.16, 0.35), lampGlow, lampCount);
   const lampTransform = new THREE.Object3D();
   let lampIndex = 0;
-  for (let z = 30; z < length; z += 40) {
+  for (let z = -70; z < length + 100; z += 40) {
     for (const side of [-1, 1]) {
       lampTransform.position.set(side * 11, 3.5, z);
       lampTransform.rotation.set(0, 0, 0);
@@ -288,7 +286,7 @@ export function createWorld(scene, { length, level = 1, timeOfDay } = {}) {
     }
   }
   scene.add(poleInstances, armInstances, bulbInstances);
-  for (let z = 150; z < length; z += 250) {
+  for (let z = -100; z < length + 100; z += 250) {
     const post = new THREE.Mesh(new THREE.BoxGeometry(0.18, 3, 0.18), lampMaterial);
     post.position.set(-12, 1.5, z);
     scene.add(post);
@@ -309,7 +307,7 @@ export function createWorld(scene, { length, level = 1, timeOfDay } = {}) {
   if (!night) {
     for (let i = 0; i < 9; i += 1) {
       const cloud = new THREE.Group();
-      const z = Math.random() * length;
+      const z = Math.random() * worldLength - 100;
       for (let j = 0; j < 5; j += 1) {
         const puff = new THREE.Mesh(new THREE.DodecahedronGeometry(3 + Math.random() * 3, 0), cloudMaterial);
         puff.position.set(j * 3, Math.random() * 2, 0);
@@ -321,7 +319,7 @@ export function createWorld(scene, { length, level = 1, timeOfDay } = {}) {
     }
   }
 
-  createStation(scene, FUEL_STATION_Z);
+  createStation(scene, fuelStationZ);
   const startLine = new THREE.Mesh(new THREE.BoxGeometry(16, 0.04, 1.4), white);
   startLine.position.set(0, 0.05, 2);
   scene.add(startLine);
@@ -342,7 +340,10 @@ export function createWorld(scene, { length, level = 1, timeOfDay } = {}) {
   }
   scene.add(finishGroup);
   scene.userData.timeOfDay = timeOfDay ?? (level >= 7 ? "night" : level >= 4 ? "sunset" : "day");
-  return { fuelStationZ: FUEL_STATION_Z, finishZ: FINISH_Z };
+  scene.userData.worldLength = length;
+  scene.userData.fuelStationZ = fuelStationZ;
+  scene.userData.finishZ = finishZ;
+  return { fuelStationZ, finishZ, length };
 }
 
 export function updateWorld(playerZ, delta) {
